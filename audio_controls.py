@@ -21,7 +21,7 @@ from PyQt5.QtWidgets import QAction
 
 # Configs
 audio_speed = 1.0
-show_notif = True
+show_notif = False
 
 # Play files faster in mpv/mplayer
 ######################################
@@ -30,10 +30,12 @@ show_notif = True
 def set_speed(player: Any, speed) -> None:
     if isinstance(player, MpvManager):
         player.set_property("speed", speed)
-        tooltip("Set audio speed to " + f"{speed:.2f}")
+        if show_notif:
+            tooltip("Set audio speed to " + f"{speed:.2f}")
     elif isinstance(player, SimpleMplayerSlaveModePlayer):
         player.command("speed_set", speed)
-        tooltip("Set audio speed to " + f"{speed:.2f}")
+        if show_notif:
+            tooltip("Set audio speed to " + f"{speed:.2f}")
 
 
 # automatically play fast
